@@ -19,7 +19,7 @@ import {
 
 const authRouter = Router();
 
-authRouter.get('/me', getMe);
+authRouter.get('/me', requireAuth, getMe);
 
 authRouter.post('/login', loginValidationRules, validateLogin, postLogin);
 

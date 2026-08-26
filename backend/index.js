@@ -38,6 +38,14 @@ app.use(
 
 app.use('/api/auth', authRouter);
 
+app.use((error, req, res, next) => {
+  console.error(error);
+
+  return res
+    .status(500)
+    .json({ success: false, message: 'Internal server error.' });
+});
+
 app.listen(PORT, () => {
   console.log(`App is running on port: ${PORT}`);
 });

@@ -66,13 +66,7 @@ const postLogout = (req, res, next) => {
 
 const getMe = async (req, res, next) => {
   try {
-    const userId = req.session.userId;
-
-    if (!userId) {
-      return res.status(401).json({ msg: 'Unauthorized.' });
-    }
-
-    const user = await authService.getUserById({ id: userId });
+    const user = await authService.getUserById({ id: req.session.userId });
 
     if (!user) {
       return res.status(404).json({ msg: 'User not found.' });
