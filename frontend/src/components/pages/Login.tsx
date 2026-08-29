@@ -62,7 +62,7 @@ const Login = () => {
               Don't have an account? Register
             </Link>
           </div>
-          <div className="flex items-center gap-3 my-4">
+          <div className="flex items-center gap-3 my-3">
             <div className="h-px flex-1 bg-gray-300" />
             <span className="text-sm text-gray-500">or</span>
             <div className="h-px flex-1 bg-gray-300" />
@@ -74,6 +74,14 @@ const Login = () => {
             >
               Continue as Guest
             </button>
+          </div>
+          <div className="flex items-center justify-center mt-4.5">
+            <Link
+              to="/"
+              className="underline underline-offset-3 text-sm text-neutral-600 "
+            >
+              Back Home
+            </Link>
           </div>
         </form>
       </article>

@@ -57,7 +57,7 @@ const Footer = () => {
               <ul>
                 <li>
                   <a
-                    href="https://github.com"
+                    href="https://github.com/EmrahIso/Personal-Finance-Tracker."
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-sm font-medium text-gray-700 hover:text-gray-900"

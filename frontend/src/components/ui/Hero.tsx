@@ -1,3 +1,5 @@
+import { Link } from 'react-router';
+
 const Hero = () => {
   const recentTransactions = [
     { label: 'Salary', amount: '+2,000 $' },
@@ -19,12 +21,12 @@ const Hero = () => {
         </p>
       </div>
       <div className="flex gap-5 justify-center items-center">
-        <button
-          type="button"
+        <Link
+          to="/register"
           className="cursor-pointer px-3 scale-105 rounded-lg py-2.5 text-sm font-bold text-white bg-neutral-900 hover:shadow-lg transition"
         >
           Get Started
-        </button>
+        </Link>
         <button
           type="button"
           className="cursor-pointer px-3 rounded-lg border border-gray-300 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-gray-50"
