@@ -1,5 +1,6 @@
 import express from 'express';
 import 'dotenv/config';
+import cors from 'cors';
 
 import session from 'express-session';
 
@@ -11,6 +12,13 @@ const PORT = process.env.PORT || 5000;
 import authRouter from './src/routes/authRouter.js';
 
 const app = express();
+
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL,
+    credentials: true,
+  })
+);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
