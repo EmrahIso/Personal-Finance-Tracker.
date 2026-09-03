@@ -11,14 +11,14 @@ const postRegister = async (req, res, next) => {
 
     const passwordHash = await generatePassword(password);
 
-    const user = await authService.createUser({
+    await authService.createUser({
       email,
       passwordHash,
     });
 
     return res
       .status(201)
-      .json({ success: true, msg: 'User registered successfully.', user });
+      .json({ success: true, msg: 'User registered successfully.' });
   } catch (error) {
     if (error.message === 'Email already taken.') {
       return res.status(400).json({ msg: 'Email already taken.' });

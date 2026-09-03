@@ -17,6 +17,8 @@ import {
   validateLogin,
 } from '../validators/loginValidator.js';
 
+import requireAuth from '../middlewares/requireAuth.js';
+
 const authRouter = Router();
 
 authRouter.get('/me', requireAuth, getMe);
