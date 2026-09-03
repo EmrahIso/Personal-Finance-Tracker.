@@ -1,6 +1,8 @@
 import { Link } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 
 const Hero = () => {
+  const navigate = useNavigate();
   const recentTransactions = [
     { label: 'Salary', amount: '+2,000 $' },
     { label: 'Groceries', amount: '-85 $' },
@@ -29,6 +31,7 @@ const Hero = () => {
         </Link>
         <button
           type="button"
+          onClick={() => navigate('/guest-register')}
           className="cursor-pointer px-3 rounded-lg border border-gray-300 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-gray-50"
         >
           Continue as guest
