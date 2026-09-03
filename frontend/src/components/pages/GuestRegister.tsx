@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -6,7 +6,13 @@ import useRegister from '../../features/auth/hooks/useRegister';
 import { registerSchema } from '../../features/auth/schemas/auth';
 import { type RegisterData } from '../../types/auth';
 
-const Register = () => {
+const GUEST_CREDENTIALS = {
+  email: 'guest@monetra.com',
+  password: 'GuestPassword123!',
+  confirmPassword: 'GuestPassword123!',
+};
+
+const GuestRegister = () => {
   const navigate = useNavigate();
   const { mutate, error: submitError, isPending } = useRegister();
   const {
@@ -17,6 +23,11 @@ const Register = () => {
     resolver: zodResolver(registerSchema),
     mode: 'onChange',
     reValidateMode: 'onChange',
+    defaultValues: {
+      email: GUEST_CREDENTIALS.email,
+      password: GUEST_CREDENTIALS.password,
+      confirmPassword: GUEST_CREDENTIALS.confirmPassword,
+    },
   });
 
   const onSubmit = (data: RegisterData) => {
@@ -26,13 +37,26 @@ const Register = () => {
   return (
     <main className="min-h-screen flex">
       <article className="bg-transparent flex-1 flex flex-col items-center justify-center">
-        <h2 className="text-3xl font-semibold text-gray-900 text-center mb-5">
-          Register at Monetra
+        <div className="inline-flex items-center justify-center mb-6 px-3 py-1.5 bg-blue-50 border border-blue-200 rounded-full">
+          <span className="text-xs font-medium text-blue-700">
+            🎉 GUEST MODE
+          </span>
+        </div>
+        <h2 className="text-3xl font-semibold text-gray-900 text-center mb-2">
+          Try Monetra for Free
         </h2>
-        <p className="text-neutral-500 mb-8 tracking-wide text-center text-base font-medium">
-          Track your spending, manage your accounts, <br /> and make smarter
-          decisions with your money.
+        <p className="text-neutral-500 mb-3 tracking-wide text-center text-base font-medium">
+          This is a temporary guest account. You'll receive some demo money to
+          explore
+          <br />
+          and test all the features of our personal finance tracker.
         </p>
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6 max-w-md text-sm text-blue-800">
+          <p className="font-medium mb-1">✓ Demo account with sample funds</p>
+          <p className="font-medium mb-1">✓ Full access to all features</p>
+          <p className="font-medium">✓ No login required</p>
+        </div>
+
         <form
           onSubmit={handleSubmit(onSubmit)}
           noValidate
@@ -53,6 +77,7 @@ const Register = () => {
               aria-describedby={errors.email ? 'email-error' : undefined}
               className="border w-82.5 bg-white border-neutral-300 py-2 px-2.5 rounded-md aria-[invalid=true]:border-red-500"
               {...register('email')}
+              readOnly
             />
             {errors.email && (
               <p id="email-error" role="alert" className="text-sm text-red-600">
@@ -74,6 +99,7 @@ const Register = () => {
               aria-describedby={errors.password ? 'password-error' : undefined}
               className="border w-82.5 bg-white border-neutral-300 py-2 px-2.5 rounded-md aria-[invalid=true]:border-red-500"
               {...register('password')}
+              readOnly
             />
             {errors.password && (
               <p
@@ -101,6 +127,7 @@ const Register = () => {
               }
               className="border w-82.5 inline-block bg-white border-neutral-300 py-2 px-2.5 rounded-md aria-[invalid=true]:border-red-500"
               {...register('confirmPassword')}
+              readOnly
             />
             {errors.confirmPassword && (
               <p
@@ -121,18 +148,10 @@ const Register = () => {
             <button
               type="submit"
               disabled={isPending}
-              className="cursor-pointer text-base font-medium w-full py-2 rounded-lg bg-neutral-900 text-white hover:shadow-lg transition"
+              className="cursor-pointer text-base font-medium w-full py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 hover:shadow-lg transition disabled:opacity-50"
             >
-              {isPending ? 'Creating account...' : 'Create my Account'}
+              {isPending ? 'Creating guest account...' : 'Start Testing Now'}
             </button>
-          </div>
-          <div className="flex justify-center">
-            <Link
-              to="/login"
-              className="text-center text-neutral-600 inline-block underline underline-offset-2 text-sm"
-            >
-              Already have an account? Log in
-            </Link>
           </div>
           <div className="flex items-center gap-3 my-3">
             <div className="h-px flex-1 bg-gray-300" />
@@ -142,19 +161,20 @@ const Register = () => {
           <div>
             <button
               type="button"
-              onClick={() => navigate('/guest-register')}
+              onClick={() => navigate('/register')}
               className="w-full cursor-pointer rounded-lg border border-gray-300 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-gray-50"
             >
-              Continue as Guest
+              Create Your Own Account
             </button>
           </div>
           <div className="flex items-center justify-center mt-4.5">
-            <Link
-              to="/"
-              className="underline underline-offset-3 text-sm text-neutral-600 "
+            <button
+              type="button"
+              onClick={() => navigate('/')}
+              className="underline underline-offset-3 text-sm text-neutral-600"
             >
               Back Home
-            </Link>
+            </button>
           </div>
         </form>
       </article>
@@ -162,4 +182,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default GuestRegister;
