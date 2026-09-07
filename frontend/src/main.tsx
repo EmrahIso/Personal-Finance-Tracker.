@@ -5,6 +5,7 @@ import './index.css';
 import App from './App';
 
 import ProtectedRoute from './components/ProtectedRoute';
+import GuestRoute from './components/GuestRoute';
 
 import Home from './components/pages/Home';
 import Register from './components/pages/Register';
@@ -24,16 +25,21 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: '/register',
-        element: <Register />,
-      },
-      {
-        path: '/guest-register',
-        element: <GuestRegister />,
-      },
-      {
-        path: '/login',
-        element: <Login />,
+        element: <GuestRoute />,
+        children: [
+          {
+            path: '/login',
+            element: <Login />,
+          },
+          {
+            path: '/guest',
+            element: <GuestRegister />,
+          },
+          {
+            path: '/register',
+            element: <Register />,
+          },
+        ],
       },
       {
         element: <ProtectedRoute />,
