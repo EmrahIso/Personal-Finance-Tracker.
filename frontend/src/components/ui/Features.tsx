@@ -24,7 +24,7 @@ const features = [
 
 const Features = () => {
   return (
-    <section className="border-b border-gray-200 pt-16 pb-20">
+    <section className="border-b border-t border-gray-200 pt-16 pb-20">
       <div className="mx-auto max-w-5xl">
         <div className="mb-12 text-center">
           <h2 className="text-3xl font-semibold text-gray-900 text-center mb-5">

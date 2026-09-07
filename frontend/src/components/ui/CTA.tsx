@@ -18,7 +18,7 @@ const CTA = () => {
           </Link>
           <button
             type="button"
-            onClick={() => navigate('/guest-register')}
+            onClick={() => navigate('/guest')}
             className="cursor-pointer px-3 rounded-lg border border-gray-300 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-gray-50"
           >
             Continue as guest

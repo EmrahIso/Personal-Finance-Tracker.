@@ -1,6 +1,11 @@
 import { Link } from 'react-router-dom';
+import LogoutButton from './LogoutButton';
 
-const Footer = () => {
+type FooterProps = {
+  authenticated?: boolean;
+};
+
+const Footer = ({ authenticated = false }: FooterProps) => {
   const currentYear = new Date().getFullYear();
 
   return (
@@ -24,31 +29,42 @@ const Footer = () => {
                   Home
                 </Link>
               </li>
-              <li>
-                <Link
-                  to="/dashboard"
-                  className="text-sm font-medium text-gray-700 hover:text-gray-900"
-                >
-                  Dashboard
-                </Link>
-              </li>
-              <li>
-                {' '}
-                <Link
-                  to="/register"
-                  className="text-sm font-medium text-gray-700 hover:text-gray-900"
-                >
-                  Register
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/login"
-                  className="text-sm font-medium text-gray-700 hover:text-gray-900"
-                >
-                  Login
-                </Link>
-              </li>
+              {authenticated && (
+                <div className="flex flex-col gap-3">
+                  <li>
+                    <Link
+                      to="/dashboard"
+                      className="text-sm font-medium text-gray-700 hover:text-gray-900"
+                    >
+                      Dashboard
+                    </Link>
+                  </li>
+                  <li>
+                    <LogoutButton asLink={true} />
+                  </li>
+                </div>
+              )}
+
+              {!authenticated && (
+                <div className="flex flex-col gap-3">
+                  <li>
+                    <Link
+                      to="/register"
+                      className="text-sm font-medium text-gray-700 hover:text-gray-900"
+                    >
+                      Register
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/login"
+                      className="text-sm font-medium text-gray-700 hover:text-gray-900"
+                    >
+                      Login
+                    </Link>
+                  </li>
+                </div>
+              )}
             </ul>
           </nav>
 

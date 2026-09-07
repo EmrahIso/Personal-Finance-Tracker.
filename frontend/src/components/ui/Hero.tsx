@@ -1,7 +1,11 @@
 import { Link } from 'react-router';
 import { useNavigate } from 'react-router-dom';
 
-const Hero = () => {
+type HeroProps = {
+  authenticated?: boolean;
+};
+
+const Hero = ({ authenticated = false }: HeroProps) => {
   const navigate = useNavigate();
   const recentTransactions = [
     { label: 'Salary', amount: '+2,000 $' },
@@ -11,34 +15,49 @@ const Hero = () => {
   ];
 
   return (
-    <section className="pb-20 flex flex-col items-center justify-center border-b border-gray-200">
-      <div>
-        <h1 className="text-3xl font-semibold text-gray-900 text-center mb-5">
-          Take control of your money.
-        </h1>
-        <p className="text-neutral-500 mb-8 tracking-wide text-center text-base font-medium">
-          Track your spending, manage your accounts, and get a clearer view of
-          your finances. <br /> Stay organized and make smarter decisions with
-          your money.
-        </p>
-      </div>
-      <div className="flex gap-5 justify-center items-center">
-        <Link
-          to="/register"
-          className="cursor-pointer px-3 scale-105 rounded-lg py-2.5 text-sm font-bold text-white bg-neutral-900 hover:shadow-lg transition"
-        >
-          Get Started
-        </Link>
-        <button
-          type="button"
-          onClick={() => navigate('/guest-register')}
-          className="cursor-pointer px-3 rounded-lg border border-gray-300 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-gray-50"
-        >
-          Continue as guest
-        </button>
-      </div>
+    <section className="pb-20 flex flex-col items-center justify-center">
+      {!authenticated && (
+        <div>
+          <h1 className="text-3xl font-semibold text-gray-900 text-center mb-5">
+            Take control of your money.
+          </h1>
+          <p className="text-neutral-500 mb-8 tracking-wide text-center text-base font-medium">
+            Track your spending, manage your accounts, and get a clearer view of
+            your finances. <br /> Stay organized and make smarter decisions with
+            your money.
+          </p>
+        </div>
+      )}
 
-      <div className="mt-15 w-full max-w-md rounded-2xl border border-gray-200 bg-white p-1 shadow-[0_12px_30px_rgba(15,23,42,0.08)]">
+      {!authenticated && (
+        <div className="flex gap-5 mb-12 justify-center items-center">
+          <Link
+            to="/register"
+            className="cursor-pointer px-3 scale-105 rounded-lg py-2.5 text-sm font-bold text-white bg-neutral-900 hover:shadow-lg transition"
+          >
+            Get Started
+          </Link>
+          <button
+            type="button"
+            onClick={() => navigate('/guest')}
+            className="cursor-pointer px-3 rounded-lg border border-gray-300 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-gray-50"
+          >
+            Continue as guest
+          </button>
+        </div>
+      )}
+
+      {authenticated && (
+        <div className="mt-15">
+          <h3 className="uppercase tracking-wider text-gray-600 text-sm">
+            Dashboard example preview:
+          </h3>
+        </div>
+      )}
+
+      <div
+        className={` w-full max-w-md rounded-2xl border border-gray-200 bg-white p-1 shadow-[0_12px_30px_rgba(15,23,42,0.08)] ${authenticated ? 'mt-4' : ''}`}
+      >
         <div className="rounded-2xl px-5 py-4">
           <p className="text-center text-sm font-medium text-gray-500">
             Total Balance
