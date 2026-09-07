@@ -1,30 +1,28 @@
 import { toast } from 'sonner';
-
-import { useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 
-import logout from '../api/logout';
+import guest from '../api/guest';
 
-const useLogout = () => {
+const useGuest = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: logout,
+    mutationFn: guest,
     onSuccess: () => {
-      toast.success('Logged out successfully.');
+      toast.success('Guest account created successfully.');
 
       queryClient.invalidateQueries({
         queryKey: ['me'],
       });
 
-      navigate('/');
-      window.location.reload();
+      navigate('/dashboard');
     },
     onError: () => {
-      toast.error('Logout failed.');
+      toast.error('Guest registration failed.');
     },
   });
 };
 
-export default useLogout;
+export default useGuest;
