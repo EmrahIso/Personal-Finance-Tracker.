@@ -14,7 +14,7 @@ import { loginSchema } from '../../features/auth/schemas/auth';
 import { type LoginData } from '../../types/auth';
 
 const Login = () => {
-  const { mutate, error: submitError, isPending } = useLogin();
+  const { mutate, isPending } = useLogin();
   const {
     register,
     handleSubmit,
@@ -111,13 +111,6 @@ const Login = () => {
               </p>
             )}
           </div>
-
-          {submitError && (
-            <p role="alert" className="text-sm text-red-600">
-              Login failed. Please check your credentials and try again.
-            </p>
-          )}
-
           <div>
             <button
               type="submit"
@@ -143,6 +136,7 @@ const Login = () => {
           <div>
             <button
               type="button"
+              onClick={() => navigate('/guest')}
               className="w-full cursor-pointer rounded-lg border border-gray-300 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-gray-50"
             >
               Continue as Guest

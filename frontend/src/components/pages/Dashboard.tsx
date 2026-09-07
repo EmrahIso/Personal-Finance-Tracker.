@@ -1,14 +1,13 @@
 import {
   ArrowDownRight,
   ArrowUpRight,
-  Bell,
   ChevronDown,
   MoreHorizontal,
   Plus,
-  Search,
   WalletCards,
 } from 'lucide-react';
 
+import Navigation from '../ui/Navigation';
 import useMe from '../../features/auth/hooks/useMe';
 
 const transactions = [
@@ -51,43 +50,7 @@ const Dashboard = () => {
 
   return (
     <main className="min-h-screen bg-stone-50 font-noto text-neutral-900">
-      <header className="border-b border-stone-200 bg-white">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 sm:px-8">
-          <div className="flex items-center gap-10">
-            <span className="font-google-sans-flex text-2xl font-bold tracking-tight">
-              Monetra
-            </span>
-            <nav className="hidden items-center gap-7 text-sm font-medium text-neutral-500 md:flex">
-              <a className="text-neutral-900" href="#overview">
-                Overview
-              </a>
-              <a className="hover:text-neutral-900" href="#transactions">
-                Transactions
-              </a>
-              <a className="hover:text-neutral-900" href="#budgets">
-                Budgets
-              </a>
-            </nav>
-          </div>
-          <div className="flex items-center gap-3">
-            <button
-              aria-label="Search"
-              className="hidden rounded-lg p-2 text-neutral-500 hover:bg-stone-100 sm:block"
-            >
-              <Search size={19} />
-            </button>
-            <button
-              aria-label="Notifications"
-              className="rounded-lg p-2 text-neutral-500 hover:bg-stone-100"
-            >
-              <Bell size={19} />
-            </button>
-            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-teal-700 text-sm font-semibold text-white">
-              EM
-            </div>
-          </div>
-        </div>
-      </header>
+      <Navigation authenticated={!!user} />
 
       <div className="mx-auto max-w-7xl px-5 py-8 sm:px-8 sm:py-10">
         <section

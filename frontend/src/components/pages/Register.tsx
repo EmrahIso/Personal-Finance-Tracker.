@@ -8,7 +8,7 @@ import { type RegisterData } from '../../types/auth';
 
 const Register = () => {
   const navigate = useNavigate();
-  const { mutate, error: submitError, isPending } = useRegister();
+  const { mutate, isPending } = useRegister();
   const {
     register,
     handleSubmit,
@@ -112,11 +112,6 @@ const Register = () => {
               </p>
             )}
           </div>
-          {submitError && (
-            <p role="alert" className="text-sm text-red-600">
-              {submitError.message}
-            </p>
-          )}
           <div>
             <button
               type="submit"
@@ -142,7 +137,7 @@ const Register = () => {
           <div>
             <button
               type="button"
-              onClick={() => navigate('/guest-register')}
+              onClick={() => navigate('/guest')}
               className="w-full cursor-pointer rounded-lg border border-gray-300 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-gray-50"
             >
               Continue as Guest
