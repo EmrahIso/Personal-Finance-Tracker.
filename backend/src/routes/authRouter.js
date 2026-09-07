@@ -5,6 +5,7 @@ import {
   postRegister,
   getMe,
   postLogout,
+  postGuest,
 } from '../controllers/authController.js';
 
 import {
@@ -18,19 +19,29 @@ import {
 } from '../validators/loginValidator.js';
 
 import requireAuth from '../middlewares/requireAuth.js';
+import requireGuest from '../middlewares/requireGuest.js';
 
 const authRouter = Router();
 
 authRouter.get('/me', requireAuth, getMe);
 
-authRouter.post('/login', loginValidationRules, validateLogin, postLogin);
+authRouter.post(
+  '/login',
+  requireGuest,
+  loginValidationRules,
+  validateLogin,
+  postLogin
+);
 
 authRouter.post(
   '/register',
+  requireGuest,
   registerValidationRules,
   validateRegister,
   postRegister
 );
+
+authRouter.post('/guest', requireGuest, postGuest);
 
 authRouter.post('/logout', postLogout);
 

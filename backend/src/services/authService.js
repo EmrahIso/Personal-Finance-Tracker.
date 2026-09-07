@@ -30,6 +30,20 @@ const createUser = async ({ email, passwordHash }) => {
   return user;
 };
 
+const createGuestUser = async () => {
+  const guestEmail = `guest-${crypto.randomUUID()}@example.local`;
+
+  const user = await prisma.user.create({
+    data: {
+      email: guestEmail,
+      passwordHash: '',
+      isGuest: true,
+    },
+  });
+
+  return user;
+};
+
 const getUserByEmail = async ({ email }) => {
   if (!email) throw new Error('email is required!');
 
@@ -54,10 +68,21 @@ const getUserById = async ({ id }) => {
       email: true,
       createdAt: true,
       updatedAt: true,
+      isGuest: true,
     },
   });
 
   return user;
+};
+
+const deleteUserById = async ({ id }) => {
+  if (!id) throw new Error('id is required!');
+
+  await prisma.user.delete({
+    where: {
+      id,
+    },
+  });
 };
 
 const authService = {
@@ -65,6 +90,8 @@ const authService = {
   createUser,
   getUserByEmail,
   getUserById,
+  createGuestUser,
+  deleteUserById,
 };
 
 export default authService;
