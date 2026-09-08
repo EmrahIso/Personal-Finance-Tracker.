@@ -1,6 +1,6 @@
 import { body, validationResult } from 'express-validator';
 
-import AppError from './AppError.js';
+import AppError from '../errors/AppError.js';
 
 const loginValidationRules = [
   body('email')

@@ -2,7 +2,7 @@ import { body, validationResult } from 'express-validator';
 
 import authService from '../services/authService.js';
 
-import AppError from './AppError.js';
+import AppError from '../errors/AppError.js';
 
 const registerValidationRules = [
   body('email')
@@ -17,7 +17,7 @@ const registerValidationRules = [
       const user = await authService.isEmailTaken({ email: value });
 
       if (user) {
-        throw new Error('Email already taken.');
+        throw new AppError(400, 'EMAIL_TAKEN', 'Email already taken.');
       }
       return true;
     }),
@@ -33,7 +33,7 @@ const registerValidationRules = [
     .withMessage('Password must be between 8 and 20 characters long.')
     .custom((value, { req }) => {
       if (value !== req.body.password) {
-        throw new Error('Passwords do not match.');
+        throw new AppError(400, 'PASSWORD_MISMATCH', 'Passwords do not match.');
       }
       return true;
     }),
