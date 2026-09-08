@@ -2,6 +2,8 @@ import { body, validationResult } from 'express-validator';
 
 import authService from '../services/authService.js';
 
+import AppError from './AppError.js';
+
 const registerValidationRules = [
   body('email')
     .trim()
@@ -41,13 +43,7 @@ function validateRegister(req, res, next) {
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
-    return res.status(400).json({
-      success: false,
-      errors: errors.array().map((error) => ({
-        path: error.path,
-        msg: error.msg,
-      })),
-    });
+    return next(new AppError(400, 'VALIDATION_ERROR', 'invalid request body'));
   }
 
   next();

@@ -11,6 +11,8 @@ const PORT = process.env.PORT || 5000;
 
 import authRouter from './src/routes/authRouter.js';
 
+import errorHandler from './src/errors/errorHandler.js';
+
 const app = express();
 
 app.use(
@@ -46,13 +48,7 @@ app.use(
 
 app.use('/api/auth', authRouter);
 
-app.use((error, req, res, next) => {
-  console.error(error);
-
-  return res
-    .status(500)
-    .json({ success: false, message: 'Internal server error.' });
-});
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`App is running on port: ${PORT}`);

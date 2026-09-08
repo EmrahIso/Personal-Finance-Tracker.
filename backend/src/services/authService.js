@@ -1,7 +1,9 @@
 import { prisma } from '../../lib/prisma.js';
 
+import AppError from '../errors/AppError.js';
+
 const isEmailTaken = async ({ email }) => {
-  if (!email) throw new Error('email is required!');
+  if (!email) throw new AppError(400, 'INVALID_INPUT', 'email is required!');
 
   const user = await prisma.user.findUnique({
     where: {
@@ -13,11 +15,14 @@ const isEmailTaken = async ({ email }) => {
 };
 
 const createUser = async ({ email, passwordHash }) => {
-  if (!email) throw new Error('email is required!');
-  if (!passwordHash) throw new Error('passwordHash is required!');
+  if (!email) throw new AppError(400, 'INVALID_INPUT', 'email is required!');
+  if (!passwordHash)
+    throw new AppError(400, 'INVALID_INPUT', 'passwordHash is required!');
 
-  if (await isEmailTaken({ email })) {
-    throw new Error('Email already taken.');
+  const existingUser = await isEmailTaken({ email });
+
+  if (existingUser) {
+    throw new AppError(400, 'EMAIL_TAKEN', 'Email already taken.');
   }
 
   const user = await prisma.user.create({
@@ -45,7 +50,7 @@ const createGuestUser = async () => {
 };
 
 const getUserByEmail = async ({ email }) => {
-  if (!email) throw new Error('email is required!');
+  if (!email) throw new AppError(400, 'INVALID_INPUT', 'email is required!');
 
   const user = await prisma.user.findUnique({
     where: {
@@ -53,11 +58,15 @@ const getUserByEmail = async ({ email }) => {
     },
   });
 
+  if (!user) {
+    throw new AppError(404, 'USER_NOT_FOUND', 'User not found.');
+  }
+
   return user;
 };
 
 const getUserById = async ({ id }) => {
-  if (!id) throw new Error('id is required!');
+  if (!id) throw new AppError(400, 'INVALID_INPUT', 'id is required!');
 
   const user = await prisma.user.findUnique({
     where: {
@@ -72,11 +81,21 @@ const getUserById = async ({ id }) => {
     },
   });
 
+  if (!user) {
+    throw new AppError(404, 'USER_NOT_FOUND', 'User not found.');
+  }
+
   return user;
 };
 
 const deleteUserById = async ({ id }) => {
-  if (!id) throw new Error('id is required!');
+  if (!id) throw new AppError(400, 'INVALID_INPUT', 'id is required!');
+
+  const user = await getUserById({ id });
+
+  if (!user) {
+    throw new AppError(404, 'USER_NOT_FOUND', 'User not found.');
+  }
 
   await prisma.user.delete({
     where: {

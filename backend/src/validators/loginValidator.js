@@ -1,5 +1,7 @@
 import { body, validationResult } from 'express-validator';
 
+import AppError from './AppError.js';
+
 const loginValidationRules = [
   body('email')
     .trim()
@@ -20,13 +22,7 @@ function validateLogin(req, res, next) {
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
-    return res.status(400).json({
-      success: false,
-      errors: errors.array().map((error) => ({
-        path: error.path,
-        msg: error.msg,
-      })),
-    });
+    return next(new AppError(400, 'VALIDATION_ERROR', 'invalid request body'));
   }
 
   next();
