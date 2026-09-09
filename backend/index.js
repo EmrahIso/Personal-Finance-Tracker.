@@ -1,54 +1,6 @@
-import express from 'express';
-import 'dotenv/config';
-import cors from 'cors';
-
-import session from 'express-session';
-
-import { prisma } from './lib/prisma.js';
-import { PrismaSessionStore } from '@quixo3/prisma-session-store';
+import app from './src/app.js';
 
 const PORT = process.env.PORT || 5000;
-
-import authRouter from './src/routes/authRouter.js';
-
-import errorHandler from './src/errors/errorHandler.js';
-
-const app = express();
-
-app.use(
-  cors({
-    origin: process.env.FRONTEND_URL,
-    credentials: true,
-  })
-);
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-
-    store: new PrismaSessionStore(prisma, {
-      checkPeriod: 2 * 60 * 1000,
-      dbRecordIdIsSessionId: true,
-    }),
-
-    resave: false,
-    saveUninitialized: false,
-
-    cookie: {
-      maxAge: 1000 * 60 * 60 * 24, // 1 day
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-      httpOnly: true,
-    },
-  })
-);
-
-app.use('/api/auth', authRouter);
-
-app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`App is running on port: ${PORT}`);
