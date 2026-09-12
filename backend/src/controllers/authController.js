@@ -20,7 +20,7 @@ const postRegister = async (req, res, next) => {
 
     return res
       .status(201)
-      .json({ success: true, message: 'User registered successfully.' });
+      .json({ success: true, msg: 'User registered successfully.' });
   } catch (error) {
     next(error);
   }
