@@ -1,4 +1,4 @@
-import prisma from '../../lib/prisma.js';
+import { prisma } from '../../lib/prisma.js';
 import crypto from 'crypto';
 
 export const createTestUser = async (overrides = {}) => {
