@@ -22,7 +22,7 @@ const createUser = async ({ email, passwordHash }) => {
   const existingUser = await isEmailTaken({ email });
 
   if (existingUser) {
-    throw new AppError(400, 'EMAIL_TAKEN', 'Email already taken.');
+    throw new AppError(409, 'EMAIL_ALREADY_EXISTS', 'Email already exists.');
   }
 
   const user = await prisma.user.create({
