@@ -1,4 +1,12 @@
-import { beforeAll, afterEach, afterAll, describe, it, expect } from 'vitest';
+import {
+  beforeAll,
+  beforeEach,
+  afterEach,
+  afterAll,
+  describe,
+  it,
+  expect,
+} from 'vitest';
 import request from 'supertest';
 
 import { cleanupDatabase } from '../../helpers/cleanup.js';
@@ -125,6 +133,10 @@ describe('Logout', () => {
 
     expect(response.status).toBe(404);
   });
+});
+
+beforeEach(async () => {
+  await cleanupDatabase();
 });
 
 afterEach(async () => {

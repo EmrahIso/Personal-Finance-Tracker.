@@ -1,4 +1,4 @@
-import { afterEach, afterAll, describe, it, expect } from 'vitest';
+import { afterEach, beforeEach, afterAll, describe, it, expect } from 'vitest';
 import request from 'supertest';
 
 import { cleanupDatabase } from '../../helpers/cleanup.js';
@@ -105,6 +105,10 @@ describe('Register', () => {
 
     expect(response.status).toBe(400);
   });
+});
+
+beforeEach(async () => {
+  await cleanupDatabase();
 });
 
 afterEach(async () => {

@@ -1,4 +1,4 @@
-import { afterEach, afterAll, describe, it, expect } from 'vitest';
+import { afterEach, beforeEach, afterAll, describe, it, expect } from 'vitest';
 import request from 'supertest';
 
 import { cleanupDatabase } from '../../helpers/cleanup.js';
@@ -19,9 +19,7 @@ describe('Guest', () => {
     expect(response.body.success).toBe(true);
 
     expect(response.headers['set-cookie']).toEqual(
-      expect.arrayContaining([
-        expect.stringContaining('connect.sid='),
-      ]),
+      expect.arrayContaining([expect.stringContaining('connect.sid=')])
     );
 
     const meResponse = await agent.get('/api/auth/me');
@@ -74,6 +72,10 @@ describe('Guest', () => {
 
     expect(response.status).toBe(403);
   });
+});
+
+beforeEach(async () => {
+  await cleanupDatabase();
 });
 
 afterEach(async () => {
