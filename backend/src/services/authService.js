@@ -17,7 +17,7 @@ const isEmailTaken = async ({ email }) => {
 const createUser = async ({ email, passwordHash }) => {
   if (!email) throw new AppError(400, 'INVALID_INPUT', 'email is required!');
   if (!passwordHash)
-    throw new AppError(400, 'INVALID_INPUT', 'passwordHash is required!');
+    throw new AppError(400, 'INVALID_INPUT', 'password is required!');
 
   const existingUser = await isEmailTaken({ email });
 

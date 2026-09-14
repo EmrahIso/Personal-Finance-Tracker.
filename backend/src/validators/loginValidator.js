@@ -22,7 +22,14 @@ function validateLogin(req, res, next) {
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
-    return next(new AppError(400, 'VALIDATION_ERROR', 'invalid request body'));
+    return next(
+      new AppError(
+        400,
+        'VALIDATION_ERROR',
+        'Please check the highlighted fields.',
+        errors.array()
+      )
+    );
   }
 
   next();

@@ -7,8 +7,6 @@ import session from 'express-session';
 import { prisma } from '../lib/prisma.js';
 import { PrismaSessionStore } from '@quixo3/prisma-session-store';
 
-const PORT = process.env.PORT || 5000;
-
 import authRouter from './routes/authRouter.js';
 
 import errorHandler from './errors/errorHandler.js';
