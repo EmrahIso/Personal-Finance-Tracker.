@@ -7,17 +7,19 @@ import { registerSchema } from '../../features/auth/schemas/auth';
 import { type RegisterData } from '../../types/auth';
 
 const Register = () => {
-  const navigate = useNavigate();
-  const { mutate, isPending } = useRegister();
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors },
   } = useForm<RegisterData>({
     resolver: zodResolver(registerSchema),
     mode: 'onChange',
     reValidateMode: 'onChange',
   });
+
+  const navigate = useNavigate();
+  const { mutate, isPending } = useRegister(setError);
 
   const onSubmit = (data: RegisterData) => {
     mutate(data);

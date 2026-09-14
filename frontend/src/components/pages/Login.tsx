@@ -14,16 +14,18 @@ import { loginSchema } from '../../features/auth/schemas/auth';
 import { type LoginData } from '../../types/auth';
 
 const Login = () => {
-  const { mutate, isPending } = useLogin();
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors },
   } = useForm<LoginData>({
     resolver: zodResolver(loginSchema),
     mode: 'onChange',
     reValidateMode: 'onChange',
   });
+
+  const { mutate, isPending } = useLogin(setError);
 
   const location = useLocation();
   const navigate = useNavigate();

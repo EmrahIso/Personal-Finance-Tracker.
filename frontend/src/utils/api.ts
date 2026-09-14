@@ -1,3 +1,6 @@
+import ApiError from '../errors/apiError';
+import { isApiErrorResponse } from '../types/api';
+
 type ApiProps = {
   path: string;
   options?: RequestInit;
@@ -11,13 +14,26 @@ const api = async <T>({ path, options }: ApiProps): Promise<T> => {
     ...options,
   });
 
-  const data = await response.json();
+  const data: unknown = await response.json();
 
   if (!response.ok) {
-    throw new Error(data.errors[0].msg || 'Something went wrong.');
+    if (isApiErrorResponse(data)) {
+      throw new ApiError(
+        response.status,
+        data.error.code,
+        data.error.message,
+        data.error.details
+      );
+    }
+
+    throw new ApiError(
+      response.status,
+      'UNKNOWN_ERROR',
+      'Something went wrong'
+    );
   }
 
-  return data;
+  return data as T;
 };
 
 export default api;

@@ -2,6 +2,8 @@ import { toast } from 'sonner';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
+import ApiError from '../../../errors/apiError';
+
 import guest from '../api/guest';
 
 const useGuest = () => {
@@ -19,8 +21,13 @@ const useGuest = () => {
 
       navigate('/dashboard');
     },
-    onError: () => {
-      toast.error('Guest registration failed.');
+    onError: (error) => {
+      if (error instanceof ApiError) {
+        toast.error(error.message);
+        return;
+      }
+
+      toast.error('Something went wrong. Please try again.');
     },
   });
 };
