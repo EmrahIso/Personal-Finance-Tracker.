@@ -27,7 +27,6 @@ const useLogin = (setError: UseFormSetError<LoginData>) => {
       navigate('/dashboard');
     },
     onError: (error) => {
-      console.log('error:', error);
       if (error instanceof ApiError) {
         if (error.code === 'VALIDATION_ERROR') {
           error.details.forEach((detail) => {
