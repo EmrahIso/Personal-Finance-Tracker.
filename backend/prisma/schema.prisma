@@ -8,11 +8,25 @@ datasource db {
   provider = "postgresql"
 }
 
+enum TransactionType {
+  INCOME
+  EXPENSE
+}
+
+enum CategoryType  {
+  INCOME
+  EXPENSE
+}
+
 model User {
   id String @id @default(uuid())
   email String @unique
   passwordHash String
   isGuest Boolean @default(false)
+
+  accounts Account[]
+  categories Category[]
+  transactions Transaction[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
@@ -25,4 +39,50 @@ model Session {
 
   createdAt DateTime @default(now())
   expiresAt DateTime
+}
+
+model Account {
+  id String @id @default(uuid())
+  name String
+  balance Decimal @default(0)
+
+  userId String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  transactions Transaction[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Category {
+  id        String       @id @default(uuid())
+  name      String
+  type      CategoryType
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  transactions Transaction[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Transaction {
+  id          String          @id @default(cuid())
+  amount      Decimal
+  type        TransactionType
+  description String?
+
+  userId     String
+  accountId  String
+  categoryId String?
+
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  account  Account   @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  category Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
