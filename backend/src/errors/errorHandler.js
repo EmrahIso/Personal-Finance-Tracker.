@@ -1,5 +1,7 @@
 import AppError from './AppError.js';
 
+import { Prisma } from '../../generated/prisma/client.js';
+
 const errorHandler = (err, req, res, next) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
