@@ -4,7 +4,7 @@ import categoryService from './categoryService.js';
 import AppError from '../errors/AppError.js';
 
 const isEmailTaken = async ({ email }) => {
-  if (!email) throw new AppError(400, 'INVALID_INPUT', 'email is required!');
+  if (!email) throw new Error('isEmailTaken: email is required.');
 
   const user = await prisma.user.findUnique({
     where: {
@@ -16,9 +16,9 @@ const isEmailTaken = async ({ email }) => {
 };
 
 const createUser = async ({ email, passwordHash }) => {
-  if (!email) throw new AppError(400, 'INVALID_INPUT', 'email is required!');
-  if (!passwordHash)
-    throw new AppError(400, 'INVALID_INPUT', 'password is required!');
+  if (!email) throw new Error('createUser: email is required.');
+
+  if (!passwordHash) throw new Error('createUser: passwordHash is required.');
 
   const existingUser = await isEmailTaken({ email });
 
@@ -63,7 +63,7 @@ const createGuestUser = async () => {
 };
 
 const getUserByEmail = async ({ email }) => {
-  if (!email) throw new AppError(400, 'INVALID_INPUT', 'email is required!');
+  if (!email) throw new Error('getUserByEmail: email is required.');
 
   const user = await prisma.user.findUnique({
     where: {
@@ -79,12 +79,7 @@ const getUserByEmail = async ({ email }) => {
 };
 
 const getUserById = async ({ id }) => {
-  if (!id)
-    throw new AppError(
-      500,
-      'INTERNAL_SERVER_ERROR',
-      'An unexpected error occurred.'
-    );
+  if (!id) throw new Error('getUserById: id is required.');
 
   const user = await prisma.user.findUnique({
     where: {
@@ -107,12 +102,7 @@ const getUserById = async ({ id }) => {
 };
 
 const deleteUserById = async ({ id }) => {
-  if (!id)
-    throw new AppError(
-      500,
-      'INTERNAL_SERVER_ERROR',
-      'An unexpected error occurred.'
-    );
+  if (!id) throw new Error('deleteUserById: id is required.');
 
   const user = await getUserById({ id });
 

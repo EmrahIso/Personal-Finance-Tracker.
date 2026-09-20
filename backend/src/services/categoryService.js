@@ -19,12 +19,7 @@ export const DEFAULT_CATEGORIES = [
 ];
 
 const addDefaultCategories = async ({ userId, tx }) => {
-  if (!userId)
-    throw new AppError(
-      500,
-      'INTERNAL_SERVER_ERROR',
-      'An unexpected error occurred.'
-    );
+  if (!userId) throw new Error('addDefaultCategories: userId is required.');
 
   const user = await tx.user.findUnique({
     where: {
@@ -45,19 +40,12 @@ const addDefaultCategories = async ({ userId, tx }) => {
 };
 
 const createCategory = async ({ userId, categoryName, categoryType }) => {
-  if (!userId)
-    throw new AppError(
-      500,
-      'INTERNAL_SERVER_ERROR',
-      'An unexpected error occurred.'
-    );
+  if (!userId) throw new Error('createCategory: userId is required.');
 
-  if (!categoryName) {
-    throw new AppError(400, 'INVALID_INPUT', 'categoryName name is required.');
-  }
-  if (!categoryType) {
-    throw new AppError(400, 'INVALID_INPUT', 'categoryType name is required.');
-  }
+  if (!categoryName)
+    throw new Error('createCategory: categoryName is required.');
+  if (!categoryType)
+    throw new Error('createCategory: categoryType is required.');
 
   const user = await prisma.user.findUnique({
     where: {
@@ -79,12 +67,7 @@ const createCategory = async ({ userId, categoryName, categoryType }) => {
 };
 
 const getUsersCategories = async ({ userId }) => {
-  if (!userId)
-    throw new AppError(
-      500,
-      'INTERNAL_SERVER_ERROR',
-      'An unexpected error occurred.'
-    );
+  if (!userId) throw new Error('getUsersCategories: userId is required.');
 
   const user = await prisma.user.findUnique({
     where: {
