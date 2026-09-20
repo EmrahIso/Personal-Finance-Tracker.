@@ -52,7 +52,6 @@ const Register = () => {
               id="email"
               placeholder="example@gmail.com"
               aria-invalid={Boolean(errors.email)}
-              aria-describedby={errors.email ? 'email-error' : undefined}
               className="border w-82.5 bg-white border-neutral-300 py-2 px-2.5 rounded-md aria-[invalid=true]:border-red-500"
               {...register('email')}
             />
@@ -73,7 +72,6 @@ const Register = () => {
               type="password"
               id="password"
               aria-invalid={Boolean(errors.password)}
-              aria-describedby={errors.password ? 'password-error' : undefined}
               className="border w-82.5 bg-white border-neutral-300 py-2 px-2.5 rounded-md aria-[invalid=true]:border-red-500"
               {...register('password')}
             />
@@ -98,9 +96,6 @@ const Register = () => {
               type="password"
               id="confirmPassword"
               aria-invalid={Boolean(errors.confirmPassword)}
-              aria-describedby={
-                errors.confirmPassword ? 'confirm-password-error' : undefined
-              }
               className="border w-82.5 inline-block bg-white border-neutral-300 py-2 px-2.5 rounded-md aria-[invalid=true]:border-red-500"
               {...register('confirmPassword')}
             />

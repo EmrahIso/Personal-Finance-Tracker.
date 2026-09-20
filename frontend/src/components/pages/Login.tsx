@@ -1,10 +1,5 @@
-import { useEffect, useRef } from 'react';
-
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
-
-import { toast } from 'sonner';
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -27,25 +22,7 @@ const Login = () => {
 
   const { mutate, isPending } = useLogin(setError);
 
-  const location = useLocation();
   const navigate = useNavigate();
-
-  const hasShownMessage = useRef(false);
-
-  useEffect(() => {
-    const message = location.state?.message;
-
-    if (!message || hasShownMessage.current) return;
-
-    hasShownMessage.current = true;
-
-    toast.success(message);
-
-    navigate(location.pathname, {
-      replace: true,
-      state: null,
-    });
-  }, [location, navigate]);
 
   const onSubmit = (data: LoginData) => {
     mutate(data);
@@ -78,7 +55,6 @@ const Login = () => {
               id="email"
               placeholder="example@gmail.com"
               aria-invalid={Boolean(errors.email)}
-              aria-describedby={errors.email ? 'email-error' : undefined}
               className="border w-82.5 bg-white border-neutral-300 py-2 px-2.5 rounded-md aria-[invalid=true]:border-red-500"
               {...register('email')}
             />
@@ -99,7 +75,6 @@ const Login = () => {
               type="password"
               id="password"
               aria-invalid={Boolean(errors.password)}
-              aria-describedby={errors.password ? 'password-error' : undefined}
               className="border w-82.5 bg-white border-neutral-300 py-2 px-2.5 rounded-md aria-[invalid=true]:border-red-500"
               {...register('password')}
             />
