@@ -1,12 +1,8 @@
 import api from '../../../utils/api';
-
-type LogoutResponse = {
-  success: boolean;
-  msg: string;
-};
+import { type ApiResponseType } from '../../../types/global';
 
 const logout = () => {
-  const data = api<LogoutResponse>({
+  const data = api<ApiResponseType>({
     path: '/api/auth/logout',
     options: {
       credentials: 'include',

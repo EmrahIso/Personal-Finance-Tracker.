@@ -1,13 +1,9 @@
 import api from '../../../utils/api';
 import { type RegisterData } from '../../../types/auth';
-
-type RegisterResponse = {
-  success: boolean;
-  msg: string;
-};
+import { type ApiResponseType } from '../../../types/global';
 
 const register = (registerData: RegisterData) => {
-  const data = api<RegisterResponse>({
+  const data = api<ApiResponseType>({
     path: '/api/auth/register',
     options: {
       credentials: 'include',

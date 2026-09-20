@@ -1,13 +1,9 @@
 import api from '../../../utils/api';
 import { type LoginData } from '../../../types/auth';
-
-type LoginResponse = {
-  success: boolean;
-  msg: string;
-};
+import { type ApiResponseType } from '../../../types/global';
 
 const login = (loginData: LoginData) => {
-  const data = api<LoginResponse>({
+  const data = api<ApiResponseType>({
     path: '/api/auth/login',
     options: {
       credentials: 'include',

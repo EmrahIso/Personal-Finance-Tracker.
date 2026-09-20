@@ -1,12 +1,8 @@
 import api from '../../../utils/api';
-
-type GuestResponse = {
-  success: boolean;
-  msg: string;
-};
+import { type ApiResponseType } from '../../../types/global';
 
 const guest = () => {
-  const data = api<GuestResponse>({
+  const data = api<ApiResponseType>({
     path: '/api/auth/guest',
     options: {
       credentials: 'include',
