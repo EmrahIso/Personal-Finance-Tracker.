@@ -1,4 +1,5 @@
 import { prisma } from '../../lib/prisma.js';
+import categoryService from './categoryService.js';
 
 import AppError from '../errors/AppError.js';
 
@@ -25,11 +26,17 @@ const createUser = async ({ email, passwordHash }) => {
     throw new AppError(409, 'EMAIL_ALREADY_EXISTS', 'Email already exists.');
   }
 
-  const user = await prisma.user.create({
-    data: {
-      email,
-      passwordHash,
-    },
+  const user = prisma.$transaction(async (tx) => {
+    const user = await tx.user.create({
+      data: {
+        email,
+        passwordHash,
+      },
+    });
+
+    await categoryService.addDefaultCategories({ userId: user.id, tx: tx });
+
+    return user;
   });
 
   return user;
@@ -38,12 +45,18 @@ const createUser = async ({ email, passwordHash }) => {
 const createGuestUser = async () => {
   const guestEmail = `guest-${crypto.randomUUID()}@example.local`;
 
-  const user = await prisma.user.create({
-    data: {
-      email: guestEmail,
-      passwordHash: '',
-      isGuest: true,
-    },
+  const user = prisma.$transaction(async (tx) => {
+    const user = await tx.user.create({
+      data: {
+        email: guestEmail,
+        passwordHash: '',
+        isGuest: true,
+      },
+    });
+
+    await categoryService.addDefaultCategories({ userId: user.id, tx: tx });
+
+    return user;
   });
 
   return user;
@@ -66,7 +79,12 @@ const getUserByEmail = async ({ email }) => {
 };
 
 const getUserById = async ({ id }) => {
-  if (!id) throw new AppError(400, 'INVALID_INPUT', 'id is required!');
+  if (!id)
+    throw new AppError(
+      500,
+      'INTERNAL_SERVER_ERROR',
+      'An unexpected error occurred.'
+    );
 
   const user = await prisma.user.findUnique({
     where: {
@@ -89,7 +107,12 @@ const getUserById = async ({ id }) => {
 };
 
 const deleteUserById = async ({ id }) => {
-  if (!id) throw new AppError(400, 'INVALID_INPUT', 'id is required!');
+  if (!id)
+    throw new AppError(
+      500,
+      'INTERNAL_SERVER_ERROR',
+      'An unexpected error occurred.'
+    );
 
   const user = await getUserById({ id });
 
