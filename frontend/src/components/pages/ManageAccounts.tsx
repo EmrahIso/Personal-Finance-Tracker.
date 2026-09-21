@@ -131,7 +131,7 @@ const ManageAccounts = () => {
 
           <a
             href="/account"
-            className="inline-flex items-center gap-2 justify-center rounded-xl bg-neutral-900 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-neutral-700"
+            className="inline-flex items-center gap-2 justify-center px-4 py-2.5 text-sm font-medium rounded-xl border border-stone-200 bg-stone-50  text-neutral-900 transition hover:bg-stone-100"
           >
             <Plus size={17} />
             Add account

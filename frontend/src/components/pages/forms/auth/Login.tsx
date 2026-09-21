@@ -1,31 +1,30 @@
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
 import { useForm } from 'react-hook-form';
-
-import usePostAccount from '../../features/account/hooks/usePostAccount';
-
-import {
-  accountSchema,
-  type AccountDataOutput,
-  type AccountDataInput,
-} from '../../features/account/schemas/account';
-
 import { zodResolver } from '@hookform/resolvers/zod';
 
-const AddAccount = () => {
+import useLogin from '../../../../features/auth/hooks/useLogin';
+import { loginSchema } from '../../../../features/auth/schemas/auth';
+import { type LoginData } from '../../../../types/auth';
+
+const Login = () => {
   const {
     register,
     handleSubmit,
     setError,
     formState: { errors },
-  } = useForm<AccountDataInput, undefined, AccountDataOutput>({
-    resolver: zodResolver(accountSchema),
+  } = useForm<LoginData>({
+    resolver: zodResolver(loginSchema),
     mode: 'onChange',
     reValidateMode: 'onChange',
   });
 
-  const { mutate, isPending } = usePostAccount(setError);
+  const { mutate, isPending } = useLogin(setError);
 
-  const onSubmit = (data: AccountDataOutput) => {
+  const navigate = useNavigate();
+
+  const onSubmit = (data: LoginData) => {
     mutate(data);
   };
 
@@ -33,11 +32,11 @@ const AddAccount = () => {
     <main className="min-h-screen flex">
       <article className="bg-transparent flex-1 flex flex-col items-center justify-center">
         <h2 className="text-3xl font-semibold text-gray-900 text-center mb-5">
-          Create Account
+          Log in at Monetra
         </h2>
         <p className="text-neutral-500 mb-8 tracking-wide text-center text-base font-medium">
-          An account represents a place where you keep your money,
-          <br /> such as a bank account, cash, or savings account.
+          Stay on top of your spending, manage accounts, <br /> and keep your
+          finances under control.
         </p>
         <form
           onSubmit={handleSubmit(onSubmit)}
@@ -46,53 +45,46 @@ const AddAccount = () => {
         >
           <div className="flex flex-col gap-1">
             <label
-              htmlFor="accountName"
+              htmlFor="email"
               className="tracking-wide flex items-center gap-1.5 text-sm text-gray-500"
             >
-              Name <span className="text-[10px]">(required)</span>
+              Email <span className="text-[10px]">(required)</span>
             </label>
             <input
-              type="text"
-              id="accountName"
-              placeholder="e.g. Savings, Bank Account"
-              aria-invalid={Boolean(errors.accountName)}
+              type="email"
+              id="email"
+              placeholder="example@gmail.com"
+              aria-invalid={Boolean(errors.email)}
               className="border w-82.5 bg-white border-neutral-300 py-2 px-2.5 rounded-md aria-[invalid=true]:border-red-500"
-              {...register('accountName')}
+              {...register('email')}
             />
-            {errors.accountName && (
-              <p
-                id="accountName-error"
-                role="alert"
-                className="text-sm text-red-600"
-              >
-                {errors.accountName.message}
+            {errors.email && (
+              <p id="email-error" role="alert" className="text-sm text-red-600">
+                {errors.email.message}
               </p>
             )}
           </div>
           <div className="flex flex-col gap-1 mb-2">
             <label
-              htmlFor="initialBalance"
+              htmlFor="password"
               className="tracking-wide flex items-center gap-1.5 text-sm text-gray-500"
             >
-              Initial Balance $ <span className="text-[10px]">(required)</span>
+              Password <span className="text-[10px]">(required)</span>
             </label>
             <input
-              type="number"
-              id="initialBalance"
-              step={0.01}
-              min={0}
-              placeholder="Current available amount in this account."
-              aria-invalid={Boolean(errors.initialBalance)}
+              type="password"
+              id="password"
+              aria-invalid={Boolean(errors.password)}
               className="border w-82.5 bg-white border-neutral-300 py-2 px-2.5 rounded-md aria-[invalid=true]:border-red-500"
-              {...register('initialBalance')}
+              {...register('password')}
             />
-            {errors.initialBalance && (
+            {errors.password && (
               <p
-                id="initialBalance-error"
+                id="password-error"
                 role="alert"
                 className="text-sm text-red-600"
               >
-                {errors.initialBalance.message}
+                {errors.password.message}
               </p>
             )}
           </div>
@@ -102,20 +94,37 @@ const AddAccount = () => {
               disabled={isPending}
               className="cursor-pointer text-base font-medium w-full py-2 rounded-lg bg-neutral-900 text-white hover:shadow-lg transition"
             >
-              {isPending ? 'Creating account...' : 'Create account'}
+              {isPending ? 'Logging in...' : 'Log In'}
             </button>
+          </div>
+          <div className="flex justify-center">
+            <Link
+              to="/register"
+              className="text-center text-neutral-600 inline-block underline underline-offset-2 text-sm"
+            >
+              Don't have an account? Register
+            </Link>
           </div>
           <div className="flex items-center gap-3 my-3">
             <div className="h-px flex-1 bg-gray-300" />
             <span className="text-sm text-gray-500">or</span>
             <div className="h-px flex-1 bg-gray-300" />
           </div>
-          <div className="flex items-center justify-center ">
+          <div>
+            <button
+              type="button"
+              onClick={() => navigate('/guest')}
+              className="w-full cursor-pointer rounded-lg border border-gray-300 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-gray-50"
+            >
+              Continue as Guest
+            </button>
+          </div>
+          <div className="flex items-center justify-center mt-4.5">
             <Link
-              to="/dashboard"
+              to="/"
               className="underline underline-offset-3 text-sm text-neutral-600 "
             >
-              Back to Dashboard
+              Back Home
             </Link>
           </div>
         </form>
@@ -124,4 +133,4 @@ const AddAccount = () => {
   );
 };
 
-export default AddAccount;
+export default Login;

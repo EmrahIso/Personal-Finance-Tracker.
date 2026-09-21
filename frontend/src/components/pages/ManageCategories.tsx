@@ -4,6 +4,8 @@ import useGetCategories from '../../features/category/hooks/useGetCategories';
 
 import PageLoader from '../ui/PageLoader';
 
+import { Plus } from 'lucide-react';
+
 const ManageCategories = () => {
   const { categories, isError, isLoading } = useGetCategories();
 
@@ -116,13 +118,21 @@ const ManageCategories = () => {
           </div>
         </div>
 
-        <div className="mt-8">
+        <div className="mt-8 flex items-center justify-between">
           <Link
             to="/dashboard"
             className="inline-flex items-center justify-center rounded-xl bg-neutral-900 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-neutral-700"
           >
             Back to dashboard
           </Link>
+
+          <a
+            href="/category"
+            className="inline-flex items-center gap-2 justify-center px-4 py-2.5 text-sm font-medium rounded-xl border border-stone-200 bg-stone-50  text-neutral-900 transition hover:bg-stone-100"
+          >
+            <Plus size={17} />
+            Add category
+          </a>
         </div>
       </div>
     </main>

@@ -1,7 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
-import useGuest from '../../features/auth/hooks/useGuest';
+import useGuest from '../../../../features/auth/hooks/useGuest';
 
 const GuestRegister = () => {
   const navigate = useNavigate();
@@ -43,7 +43,7 @@ const GuestRegister = () => {
             onClick={() => navigate('/register')}
             className="w-full cursor-pointer mt-4 rounded-lg border border-gray-300 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-gray-50"
           >
-            Create your own account
+            Create your own Monetra account
           </button>
           <Link
             type="button"

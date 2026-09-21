@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
-import usePostCategory from '../../features/category/hooks/usePostCategory';
+import usePostCategory from '../../../../features/category/hooks/usePostCategory';
 
 import {
   categorySchema,
   type CategoryDataType,
-} from '../../features/category/schemas/category';
+} from '../../../../features/category/schemas/category';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
