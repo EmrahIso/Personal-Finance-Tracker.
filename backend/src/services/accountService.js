@@ -3,17 +3,11 @@ import { prisma } from '../../lib/prisma.js';
 import AppError from '../errors/AppError.js';
 
 const createAccount = async ({ accountName, initialBalance, userId }) => {
-  if (!id)
-    throw new AppError(
-      500,
-      'INTERNAL_SERVER_ERROR',
-      'An unexpected error occurred.'
-    );
+  if (!userId) throw new Error('createAccount: userId is required.');
 
-  if (!accountName)
-    throw new AppError(400, 'INVALID_INPUT', 'accountName is required!');
+  if (!accountName) throw new Error('createAccount: accountName is required.');
   if (!initialBalance)
-    throw new AppError(400, 'INVALID_INPUT', 'initialBalance is required!');
+    throw new Error('createAccount: initialBalance is required.');
 
   const user = await prisma.user.findUnique({
     where: {
@@ -37,12 +31,7 @@ const createAccount = async ({ accountName, initialBalance, userId }) => {
 };
 
 const getUsersAccounts = async ({ userId }) => {
-  if (!userId)
-    throw new AppError(
-      500,
-      'INTERNAL_SERVER_ERROR',
-      'An unexpected error occurred.'
-    );
+  if (!userId) throw new Error('getUsersAccounts: userId is required.');
 
   const user = await prisma.user.findUnique({
     where: {
