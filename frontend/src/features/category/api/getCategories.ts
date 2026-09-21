@@ -4,14 +4,14 @@ type GetCategoriesResponseType = {
   categories: Category[];
 };
 
-type Category = {
+export type Category = {
   id: string;
   name: string;
   type: 'INCOME' | 'EXPENSE';
 };
 
-const getCategories = async () => {
-  const data = await api<GetCategoriesResponseType>({
+const getCategories = () => {
+  const data = api<GetCategoriesResponseType>({
     path: '/api/categories',
     options: {
       credentials: 'include',

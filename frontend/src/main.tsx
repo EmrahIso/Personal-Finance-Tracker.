@@ -8,14 +8,16 @@ import ProtectedRoute from './components/ProtectedRoute';
 import GuestRoute from './components/GuestRoute';
 
 import Home from './components/pages/Home';
-import Register from './components/pages/Register';
-import GuestRegister from './components/pages/GuestRegister';
-import Login from './components/pages/Login';
+import Register from './components/pages/forms/auth/Register';
+import GuestRegister from './components/pages/forms/auth/GuestRegister';
+import Login from './components/pages/forms/auth/Login';
 import Dashboard from './components/pages/Dashboard';
-import AddAccount from './components/pages/AddAccount';
-import AddCategory from './components/pages/AddCategory';
+import AddAccount from './components/pages/forms/account/AddAccount';
+import AddCategory from './components/pages/forms/category/AddCategory';
 import ManageAccounts from './components/pages/ManageAccounts';
 import ManageCategories from './components/pages/ManageCategories';
+import Income from './components/pages/forms/transaction/Income';
+import Expense from './components/pages/forms/transaction/Expense';
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
@@ -67,6 +69,14 @@ const router = createBrowserRouter([
           {
             path: '/manage-categories',
             element: <ManageCategories />,
+          },
+          {
+            path: '/income',
+            element: <Income />,
+          },
+          {
+            path: '/expense',
+            element: <Expense />,
           },
         ],
       },

@@ -10,6 +10,7 @@ import { PrismaSessionStore } from '@quixo3/prisma-session-store';
 import authRouter from './routes/authRouter.js';
 import accountRouter from './routes/accountRouter.js';
 import categoryRouter from './routes/categoryRouter.js';
+import transactionsRouter from './routes/transactionsRouter.js';
 
 import errorHandler from './errors/errorHandler.js';
 
@@ -49,6 +50,7 @@ app.use(
 app.use('/api/auth', authRouter);
 app.use('/api/accounts', accountRouter);
 app.use('/api/categories', categoryRouter);
+app.use('/api/transactions', transactionsRouter);
 
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'OK' });
