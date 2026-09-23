@@ -2,7 +2,11 @@ import { Link } from 'react-router-dom';
 
 import useGetCategories from '../../features/category/hooks/useGetCategories';
 
+import DeleteCategoryButton from './forms/category/DeleteCategoryButton';
+
 import PageLoader from '../ui/PageLoader';
+
+const MAX_CATEGORIES = 30;
 
 import { Plus } from 'lucide-react';
 
@@ -61,7 +65,13 @@ const ManageCategories = () => {
           Organize your categories to keep reporting clear.
         </p>
 
-        <div className="mt-8 overflow-hidden rounded-2xl border border-stone-200 bg-stone-50">
+        <div className="mt-3">
+          <span className="text-neutral-500 font-semibold uppercase pl-3">
+            {categories?.length} / {MAX_CATEGORIES}
+          </span>
+        </div>
+
+        <div className="mt-5 overflow-hidden rounded-2xl border border-stone-200 bg-stone-50">
           <div className="hidden grid-cols-[1.5fr_1fr_auto] items-center gap-4 border-b border-stone-200 bg-stone-100 px-5 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-neutral-500 sm:grid">
             <span>category</span>
             <span>type</span>
@@ -100,18 +110,13 @@ const ManageCategories = () => {
                 </div>
 
                 <div className="flex items-center gap-2 sm:justify-end">
-                  <button
-                    type="button"
+                  <a
+                    href={'/edit-category/' + category.id}
                     className="rounded-lg border border-stone-300 bg-white px-3 py-1.5 text-sm font-medium text-neutral-700 transition hover:border-neutral-400 hover:bg-stone-100"
                   >
                     Edit
-                  </button>
-                  <button
-                    type="button"
-                    className="rounded-lg border border-red-200 bg-red-50 px-3 py-1.5 text-sm font-medium text-red-600 transition hover:border-red-300 hover:bg-red-100"
-                  >
-                    Delete
-                  </button>
+                  </a>
+                  <DeleteCategoryButton categoryId={category.id} />
                 </div>
               </div>
             ))}

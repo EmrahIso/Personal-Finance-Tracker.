@@ -16,7 +16,7 @@ const categoryValidationRules = [
     .withMessage('Category type must be either INCOME or EXPENSE.'),
 ];
 
-function validatePostCategory(req, res, next) {
+function validateCategory(req, res, next) {
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
@@ -33,4 +33,4 @@ function validatePostCategory(req, res, next) {
   next();
 }
 
-export { categoryValidationRules, validatePostCategory };
+export { categoryValidationRules, validateCategory };

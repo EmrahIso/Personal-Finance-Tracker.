@@ -1,6 +1,7 @@
 import api from '../../../utils/api';
 
 type GetCategoriesResponseType = {
+  success: true;
   categories: Category[];
 };
 

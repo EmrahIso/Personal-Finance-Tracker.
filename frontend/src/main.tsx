@@ -18,6 +18,7 @@ import ManageAccounts from './components/pages/ManageAccounts';
 import ManageCategories from './components/pages/ManageCategories';
 import Income from './components/pages/forms/transaction/Income';
 import Expense from './components/pages/forms/transaction/Expense';
+import EditCategory from './components/pages/forms/category/EditCategory';
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
@@ -77,6 +78,10 @@ const router = createBrowserRouter([
           {
             path: '/expense',
             element: <Expense />,
+          },
+          {
+            path: '/edit-category/:id',
+            element: <EditCategory />,
           },
         ],
       },
